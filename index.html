@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<html ng-app="app1">
+
+<head>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+        crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- <script crossorigin src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script> -->
+    <!-- <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.1.8/browser.min.js"></script>
+
+
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin scr="https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/4.3.1/react-router-dom.min.js"></script> -->
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-dark bg-dark navbar-expand-md fixed-top">
+        <div class="container">
+
+            <a class="navbar-brand" href="#">ravishdussaruth</a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu">
+
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#skills">Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#project">Project</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+
+                </ul>
+
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <div id="boxRight">
+        <div class="container">
+
+
+
+            <div class="row" class="float-left"">
+
+                <div class=" col-md-3" id="campaign-box">
+
+
+                <label>Enter Campaign Name Below: </label>
+                <input type="text" id="campaignName" placeholder="Enter Campaign name" />
+
+
+                <label>Enter Expiry date for the campaign </label>
+                <input type="date" id="expdate" placeholder="Enter Campaign name" />
+
+                <button id="sendData">ADD CAMPAIGN</button>
+
+
+            </div>
+
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-6">
+
+                <label>Paste HTML CODE HERE</label>
+
+                <textarea id="area" rows="10" cols="50"></textarea>
+                <br>
+                <button>Preview</button>
+
+            </div>
+
+            <p id="error"></p>
+
+
+
+        </div>
+    </div>
+
+
+    <!-- <script src="js/App.js"></script> -->
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var isValid = true;
+            $("#sendData").click(function () {
+
+
+                var camppaignName = $("#campaignName").val();
+                var exp = $("#expdate").val();
+                alert("Add Campaign Clicked : " + isValid + "  Expriy date  : " + exp.trim());
+                validate(camppaignName.trim(), "Campaign Name cannot be empty");
+                validate(exp.trim(), "Expiry date cannot be empty");
+
+                var htmlCode = $("#area").val();
+
+                validate(htmlCode.trim(), "Html Code is empty");
+
+                if (isValid == true) {
+                    alert("Sending data " + htmlCode);
+                    $.post("server.php", {
+                            camp_name: camppaignName.trim(),
+                            exp_date: exp,
+                            html_code: htmlCode
+                        },
+                        function (data, status) {
+                            $("#error").html(data);
+                        });
+
+                }
+
+            });
+
+
+            function validate(item, ErrorMsg) {
+
+
+                if (item == null || item == "") {
+                    alert(ErrorMsg);
+                    isValid = false;
+                }
+            }
+
+
+        });
+    </script>
+
+    <!-- <script type="text/babel">
+
+        class Navbar extends React.Component { 
+
+                 
+            render(){
+                return (
+                    // <h1>H</h1>
+                    <nav className="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+                        <div className="container">
+
+                            <a class="nav-link" href="/" className="brand-logo">VISRAH</a>
+                             <ul className="right navbar-nav">
+                                <li class="nav-item"><a class="nav-link"  href="#">Home</a></li>
+                                <li class="nav-item"><a class="nav-link"  href="#">About</a></li>
+                                <li class="nav-item"><a class="nav-link" onClick= { this.greet } href="#">Contact</a></li>
+                                
+
+                             </ul> 
+                        </div>
+                        
+                    </nav>
+                )
+            }
+        }
+
+        
+
+        
+        ReactDOM.render(<Navbar/>, document.getElementById('con'));
+
+    </script> -->
+
+
+</body>
+
+
+
+
+
+</html>
